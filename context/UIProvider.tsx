@@ -1,7 +1,23 @@
-import React from 'react'
+import { FC, PropsWithChildren, useReducer } from "react";
+import { UIContext, uiReducer } from "./";
 
-export const UIProvider = () => {
+export interface UIState {
+  sideMenuOpen: boolean;
+}
+
+const UI_INITIAL_STATE: UIState = {
+  sideMenuOpen: false,
+}
+
+export const UIProvider: FC<PropsWithChildren> = ({ children }) => {
+
+  const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE)
+
   return (
-    <div>UIProvider</div>
+    <UIContext.Provider value={{
+      sideMenuOpen: false
+    }}>
+      {children}
+    </UIContext.Provider>
   )
 }
