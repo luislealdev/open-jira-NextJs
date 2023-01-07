@@ -1,7 +1,7 @@
 import { Inter } from '@next/font/google'
 import { Card, CardContent, CardHeader, Grid } from '@mui/material'
 import { Layout } from '../components/layouts';
-import { EntryList } from '../components/ui';
+import { EntryList, NewEntry } from '../components/ui';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,6 +14,7 @@ export default function Home() {
             <CardHeader title="Pendientes" />
             <CardContent>
               {/* AGREGAR UNA NUEVA ENTRADA */}
+              <NewEntry/>
               {/* LISTADO DE ENTRADAS */}
               <EntryList status="pending" />
             </CardContent>
@@ -24,7 +25,6 @@ export default function Home() {
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
             <CardHeader title="En progreso" />
             <CardContent>
-              {/* AGREGAR UNA NUEVA ENTRADA */}
               {/* LISTADO DE ENTRADAS */}
               <EntryList status="in-progress" />
             </CardContent>
@@ -35,7 +35,6 @@ export default function Home() {
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
             <CardHeader title="Completado" />
             <CardContent>
-              {/* AGREGAR UNA NUEVA ENTRADA */}
               {/* LISTADO DE ENTRADAS */}
               <EntryList status="finished" />
             </CardContent>
