@@ -3,7 +3,7 @@ import { Box } from "@mui/system"
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import StartOutlinedIcon from '@mui/icons-material/StartOutlined';
 import { useContext } from "react";
-import { UIContext } from '../../context/UIContext';
+import { UIContext } from '../../context/ui/UIContext';
 
 const menuItems: string[] = ['Home', 'About us', 'Starred'];
 
