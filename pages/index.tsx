@@ -11,34 +11,34 @@ export default function Home() {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title="Pendientes"/>
-              <CardContent>
-                {/* AGREGAR UNA NUEVA ENTRADA */}
-                {/* LISTADO DE ENTRADAS */}
-                <EntryList/>
-              </CardContent>
+            <CardHeader title="Pendientes" />
+            <CardContent>
+              {/* AGREGAR UNA NUEVA ENTRADA */}
+              {/* LISTADO DE ENTRADAS */}
+              <EntryList status="pending" />
+            </CardContent>
           </Card>
         </Grid>
 
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title="En progreso"/>
-              <CardContent>
-                {/* AGREGAR UNA NUEVA ENTRADA */}
-                {/* LISTADO DE ENTRADAS */}
-                <EntryList/>
-              </CardContent>
+            <CardHeader title="En progreso" />
+            <CardContent>
+              {/* AGREGAR UNA NUEVA ENTRADA */}
+              {/* LISTADO DE ENTRADAS */}
+              <EntryList status="in-progress" />
+            </CardContent>
           </Card>
         </Grid>
 
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title="Completado"/>
-              <CardContent>
-                {/* AGREGAR UNA NUEVA ENTRADA */}
-                {/* LISTADO DE ENTRADAS */}
-                <EntryList/>
-              </CardContent>
+            <CardHeader title="Completado" />
+            <CardContent>
+              {/* AGREGAR UNA NUEVA ENTRADA */}
+              {/* LISTADO DE ENTRADAS */}
+              <EntryList status="finished" />
+            </CardContent>
           </Card>
         </Grid>
       </Grid>
