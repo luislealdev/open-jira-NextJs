@@ -4,11 +4,13 @@ import AddIcon from '@mui/icons-material/AddCircleOutline';
 import SaveIcon from '@mui/icons-material/Save';
 import { ChangeEvent, useState, useContext } from 'react';
 import { EntriesContext } from '../../context/entries/EntriesContext';
+import { UIContext } from '../../context/ui/UIContext';
 export const NewEntry = () => {
 
     const { addNewEntry } = useContext(EntriesContext);
 
-    const [isAdding, setIsAdding] = useState(false);
+    const { isAddingEntry, changeIsAddingEntry } = useContext(UIContext);
+
     const [hasTouched, setHasTouched] = useState(false);
     const [inputText, setInputText] = useState('');
 
@@ -21,7 +23,7 @@ export const NewEntry = () => {
 
         addNewEntry(inputText);
 
-        setIsAdding(false);
+        changeIsAddingEntry(false);
         setHasTouched(false);
         setInputText('')
 
@@ -29,7 +31,7 @@ export const NewEntry = () => {
 
     return (
         <Box sx={{ marginBottom: 2, padding: 2 }}>
-            {isAdding ?
+            {isAddingEntry ?
                 <>
                     <TextField
                         fullWidth
@@ -46,7 +48,7 @@ export const NewEntry = () => {
                     />
 
                     <Box display='flex' justifyContent="space-between">
-                        <Button variant='text' onClick={() => { setIsAdding(false); setHasTouched(false) }}>
+                        <Button variant='text' onClick={() => { changeIsAddingEntry(false); setHasTouched(false) }}>
                             Cancelar
                         </Button>
                         <Button variant='outlined' color='secondary' endIcon={<SaveIcon />} disabled={inputText.length <= 0} onClick={onSave}>
@@ -61,7 +63,7 @@ export const NewEntry = () => {
                     startIcon={<AddIcon />}
                     fullWidth
                     variant='outlined'
-                    onClick={() => setIsAdding(true)}
+                    onClick={() => changeIsAddingEntry(true)}
                 >
                     Agregar Tarea
                 </Button>

@@ -1,23 +1,29 @@
 import { UIState } from './UIProvider';
 
-type UIActionType = | { type: 'UI - Open Sidebar' } | { type: 'UI - Close Sidebar' }
+type UIActionType = | { type: 'UI - Open Sidebar' } | { type: 'UI - Close Sidebar' } | { type: 'UI - changeIsAddingEntry', payload: boolean }
 
 export const uiReducer = (state: UIState, action: UIActionType): UIState => {
 
    switch (action.type) {
-     case 'UI - Open Sidebar':
-        return {
+      case 'UI - Open Sidebar':
+         return {
             ...state,
             sideBarOpen: true
-           }
+         }
 
-    case 'UI - Close Sidebar':
-       return {
+      case 'UI - Close Sidebar':
+         return {
             ...state,
             sideBarOpen: false
-           }
+         }
 
-       default:
-           return state;
+      case 'UI - changeIsAddingEntry':
+         return {
+            ...state,
+            isAddingEntry: action.payload
+         }
+
+      default:
+         return state;
    }
 }
