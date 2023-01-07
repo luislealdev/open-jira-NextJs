@@ -2,15 +2,19 @@ import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography
 import { Box } from "@mui/system"
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import StartOutlinedIcon from '@mui/icons-material/StartOutlined';
+import { useContext } from "react";
+import { UIContext } from '../../context/UIContext';
 
 const menuItems: string[] = ['Home', 'About us', 'Starred'];
 
 export const SideBar = () => {
+    const { sideBarOpen, closeSideBar } = useContext(UIContext);
+
     return (
         <Drawer
             anchor="left"
-            open={true}
-            onClose={() => console.log("Closing")}
+            open={sideBarOpen}
+            onClose={closeSideBar}
         >
             <Box sx={{ width: 250 }}>
                 <Box sx={{ padding: '5px 10px' }}>

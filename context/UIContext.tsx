@@ -1,11 +1,13 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 
 interface ContextProps {
-  sideMenuOpen: boolean
+    sideBarOpen: boolean;
+
+    // Methods
+    closeSideBar: () => void;
+    openSideBar: () => void;
 }
 
-export const UIContext = createContext({} as ContextProps)
 
-
-
+export const UIContext = createContext({} as ContextProps );

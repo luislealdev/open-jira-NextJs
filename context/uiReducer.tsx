@@ -4,20 +4,20 @@ type UIActionType = | { type: 'UI - Open Sidebar' } | { type: 'UI - Close Sideba
 
 export const uiReducer = (state: UIState, action: UIActionType): UIState => {
 
-    switch (action.type) {
-        case 'UI - Open Sidebar':
-            return {
-                ...state,
-                sideMenuOpen: true
-            }
+   switch (action.type) {
+     case 'UI - Open Sidebar':
+        return {
+            ...state,
+            sideBarOpen: true
+           }
 
-        case 'UI - Close Sidebar':
-            return {
-                ...state,
-                sideMenuOpen: false
-            }
+    case 'UI - Close Sidebar':
+       return {
+            ...state,
+            sideBarOpen: false
+           }
 
-        default:
-            return state;
-    }
+       default:
+           return state;
+   }
 }
