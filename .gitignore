@@ -3,6 +3,9 @@
 # docker
 mongo/
 
+# variables
+.env
+
 # dependencies
 /node_modules
 /.pnp

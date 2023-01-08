@@ -7,3 +7,7 @@ docker-compose up -d
 ```
 
 - The -d means **detached**
+
+## Configurate variables
+
+Rename the file __.env.template__ to __.env__
