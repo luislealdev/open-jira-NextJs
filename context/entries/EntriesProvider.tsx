@@ -18,15 +18,20 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
     const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
 
     const addNewEntry = async (description: string) => {
-        
+
         const { data: newEntry } = await entriesApi.post('/entries', { description });
 
         dispatch({ type: '[Entries] - addEntry', payload: newEntry });
     }
 
-    const updateEntry = (entry: Entry) => {
+    const updateEntry = async ({ _id, description, status }: Entry) => {
+        try {
+            const { data: updatedEntry } = await entriesApi.put<Entry>(`/entries/${_id}`, { description, status });
+            dispatch({ type: '[Entries] - entryUpdated', payload: updatedEntry });
 
-        dispatch({ type: '[Entries] - entryUpdated', payload: entry });
+        } catch (error) {
+            console.log(error);
+        }
 
     }
 
