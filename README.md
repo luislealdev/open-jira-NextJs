@@ -10,4 +10,12 @@ docker-compose up -d
 
 ## Configurate variables
 
-Rename the file __.env.template__ to __.env__
+Rename the file **.env.template** to **.env**
+
+## Add fake info to database
+
+Call
+
+```
+http://localhost:3000/api/seed
+```
