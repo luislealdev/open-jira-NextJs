@@ -1,7 +1,10 @@
 import { EntriesState } from './EntriesProvider';
 import { Entry } from '../../interfaces/entries';
 
-type EntriesActionType = | { type: '[Entries] - addEntry', payload: Entry } | { type: '[Entries] - entryUpdated', payload: Entry }
+type EntriesActionType =
+    | { type: '[Entries] - addEntry', payload: Entry }
+    | { type: '[Entries] - entryUpdated', payload: Entry }
+    | { type: '[Entries] - loadEntries', payload: Entry[] }
 
 export const entriesReducer = (state: EntriesState, action: EntriesActionType): EntriesState => {
 
@@ -11,6 +14,7 @@ export const entriesReducer = (state: EntriesState, action: EntriesActionType): 
                 ...state,
                 entries: [...state.entries, action.payload]
             }
+
         case '[Entries] - entryUpdated':
             return {
                 ...state,
@@ -21,6 +25,12 @@ export const entriesReducer = (state: EntriesState, action: EntriesActionType): 
                     }
                     return entry;
                 })
+            }
+
+        case '[Entries] - loadEntries':
+            return {
+                ...state,
+                entries: [...action.payload]
             }
 
         default:
