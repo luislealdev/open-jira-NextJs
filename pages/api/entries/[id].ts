@@ -15,6 +15,9 @@ export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
         case 'PUT':
             return updateEntry(req, res);
 
+        case 'GET':
+            return getEntry(req, res);
+
         default:
             return res.status(400).json({ message: 'Method doesnt exist' });
     }
@@ -37,6 +40,20 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse) => {
         await db.disconnect();
         res.status(400).json({ message: error.erros.status.message });
     }
+}
 
+const getEntry = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { id } = req.query;
 
+    await db.connect();
+
+    try {
+        const entry = await Entry.findById(id);
+        res.status(200).json(entry);
+        await db.disconnect();
+    } catch (error: any) {
+        console.log(error);
+        await db.disconnect();
+        res.status(400).json({ message: error.erros.status.message });
+    }
 }
