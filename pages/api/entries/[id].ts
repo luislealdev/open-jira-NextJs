@@ -7,9 +7,9 @@ import { Entry } from '../../../models';
 type Data = { message: string } | IEntry
 
 export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
-    const { id } = req.query;
+    // const { id } = req.query;
 
-    if (!mongoose.isValidObjectId(id)) return res.status(400).json({ message: `The id: ${id}, is not valid` });
+    // if (!mongoose.isValidObjectId(id)) return res.status(400).json({ message: `The id: ${id}, is not valid` });
 
     switch (req.method) {
         case 'PUT':
