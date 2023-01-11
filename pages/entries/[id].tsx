@@ -2,12 +2,17 @@ import { useState, ChangeEvent, useMemo, FC } from 'react';
 import { GetServerSideProps } from 'next'
 import { Layout } from "../../components/layouts";
 import { capitalize, CardHeader, Grid, Card, CardContent, TextField, CardActions, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
-import { EntryStatus } from '../../interfaces/entries';
+import { EntryStatus, Entry } from '../../interfaces/entries';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { isValidObjectId } from 'mongoose';
+import { dbEntries } from '../../database';
 
-export const EntryPage: FC = (props) => {
+interface Props {
+    entry: Entry
+}
+export const EntryPage: FC<Props> = ({ entry }) => {
+
+    console.log(entry);
 
     const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
@@ -114,18 +119,21 @@ export const EntryPage: FC = (props) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const { id } = params as { id: string }
 
-    if (!isValidObjectId(id)) {
+    const entry = dbEntries.getEntryById(id);
+
+
+    if (!entry) {
         return {
             redirect: {
                 destination: '/',
-                permanent: false
+                permanent: false,
             }
         }
     }
 
     return {
         props: {
-            id
+            entry
         }
     }
 }
