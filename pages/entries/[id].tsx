@@ -12,12 +12,10 @@ interface Props {
 }
 export const EntryPage: FC<Props> = ({ entry }) => {
 
-    console.log(entry);
-
     const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
-    const [inputText, setInputText] = useState('');
-    const [status, setStatus] = useState('pending');
+    const [inputText, setInputText] = useState(entry.description);
+    const [status, setStatus] = useState(entry.status);
 
     const [hasTouched, setHasTouched] = useState(false);
 
@@ -37,7 +35,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
 
 
     return (
-        <Layout title="blabla">
+        <Layout title={inputText}>
             <>
                 <Grid
                     container
@@ -119,7 +117,8 @@ export const EntryPage: FC<Props> = ({ entry }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const { id } = params as { id: string }
 
-    const entry = dbEntries.getEntryById(id);
+    const entry = await dbEntries.getEntryById(id);
+
 
 
     if (!entry) {
