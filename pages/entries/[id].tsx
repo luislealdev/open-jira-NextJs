@@ -1,11 +1,13 @@
+import { useState, ChangeEvent, useMemo, FC } from 'react';
+import { GetServerSideProps } from 'next'
 import { Layout } from "../../components/layouts";
 import { capitalize, CardHeader, Grid, Card, CardContent, TextField, CardActions, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
 import { EntryStatus } from '../../interfaces/entries';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { useState, ChangeEvent, useMemo } from 'react';
+import { isValidObjectId } from 'mongoose';
 
-export const EntryPage = () => {
+export const EntryPage: FC = (props) => {
 
     const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
@@ -104,6 +106,31 @@ export const EntryPage = () => {
             </>
         </Layout>
     )
+};
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+    const { id } = params as { id: string }
+
+    if (!isValidObjectId(id)) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+    return {
+        props: {
+            id
+        }
+    }
 }
+
+
+
 
 export default EntryPage;
