@@ -17,6 +17,8 @@ export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
 
         case 'GET':
             return getEntry(req, res);
+        case 'DELETE':
+            return deleteEntry(req, res);
 
         default:
             return res.status(400).json({ message: 'Method doesnt exist' });
@@ -50,6 +52,21 @@ const getEntry = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const entry = await Entry.findById(id);
         res.status(200).json(entry);
+        await db.disconnect();
+    } catch (error: any) {
+        console.log(error);
+        await db.disconnect();
+        res.status(400).json({ message: error.erros.status.message });
+    }
+}
+
+const deleteEntry = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { id } = req.query;
+
+    await db.connect();
+    try {
+        await Entry.findByIdAndDelete(id);
+        res.status(200).json({ message: 'Deleted correctly' });
         await db.disconnect();
     } catch (error: any) {
         console.log(error);

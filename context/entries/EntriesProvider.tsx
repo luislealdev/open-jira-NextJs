@@ -10,9 +10,7 @@ export interface EntriesState {
 }
 
 const Entries_INITIAL_STATE: EntriesState = {
-    entries: [
-
-    ],
+    entries: [],
 }
 
 export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -46,6 +44,24 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }
 
+    const deleteEntry = async (id: string) => {
+        try {
+            await entriesApi.delete(`/entries/${id}`);
+
+            dispatch({ type: '[Entries] - deleteEntry', payload: id });
+
+            enqueueSnackbar('Entrada eliminada', {
+                variant: 'error',
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'right'
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const loadEntries = async () => {
         const { data } = await entriesApi.get<Entry[]>('entries');
         dispatch({ type: '[Entries] - loadEntries', payload: data });
@@ -63,7 +79,8 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
             //Methods
 
             addNewEntry,
-            updateEntry
+            updateEntry,
+            deleteEntry
         }}>
             {children}
         </EntriesContext.Provider>

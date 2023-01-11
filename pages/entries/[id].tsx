@@ -7,13 +7,16 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { dbEntries } from '../../database';
 import { EntriesContext } from '../../context/entries/EntriesContext';
+import { useRouter } from 'next/router';
 
 interface Props {
     entry: Entry
 }
 export const EntryPage: FC<Props> = ({ entry }) => {
 
-    const { updateEntry } = useContext(EntriesContext);
+    const router = useRouter();
+
+    const { updateEntry, deleteEntry } = useContext(EntriesContext);
 
     const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
@@ -43,6 +46,12 @@ export const EntryPage: FC<Props> = ({ entry }) => {
         }
 
         updateEntry(entryToUpdate, true);
+        router.push('/');
+    }
+
+    const onDelete = () => {
+        deleteEntry(entry._id);
+        router.push('/');
     }
 
 
@@ -114,8 +123,8 @@ export const EntryPage: FC<Props> = ({ entry }) => {
                     position: 'fixed',
                     bottom: 30,
                     right: 30,
-                    backgroundColor: 'error.dark'
-                }}>
+                    backgroundColor: 'error.dark',
+                }} onClick={onDelete}>
                     <DeleteOutlinedIcon />
                 </IconButton>
             </>
