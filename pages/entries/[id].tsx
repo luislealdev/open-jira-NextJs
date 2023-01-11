@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useMemo, FC } from 'react';
+import { useState, ChangeEvent, useMemo, FC, useContext } from 'react';
 import { GetServerSideProps } from 'next'
 import { Layout } from "../../components/layouts";
 import { capitalize, CardHeader, Grid, Card, CardContent, TextField, CardActions, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
@@ -6,31 +6,43 @@ import { EntryStatus, Entry } from '../../interfaces/entries';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { dbEntries } from '../../database';
+import { EntriesContext } from '../../context/entries/EntriesContext';
 
 interface Props {
     entry: Entry
 }
 export const EntryPage: FC<Props> = ({ entry }) => {
 
+    const { updateEntry } = useContext(EntriesContext);
+
     const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
+
     const [inputText, setInputText] = useState(entry.description);
-    const [status, setStatus] = useState(entry.status);
+    const [status, setStatus] = useState<EntryStatus>(entry.status);
 
     const [hasTouched, setHasTouched] = useState(false);
 
     const isValid = useMemo(() => !(inputText.length <= 0 && hasTouched), [inputText, hasTouched]);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setInputText(event.target.value)
+        setInputText(event.target.value);
     }
 
     const onChangeRadioButton = (event: ChangeEvent<HTMLInputElement>) => {
-        setStatus(event.target.value)
+        setStatus(event.target.value as EntryStatus);
     }
 
     const onSave = () => {
-        console.log({ inputText, status });
+        if (inputText.trim().length === 0) return;
+
+        const entryToUpdate: Entry = {
+            ...entry,
+            status,
+            description: inputText
+        }
+
+        updateEntry(entryToUpdate, true);
     }
 
 
