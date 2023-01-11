@@ -3,7 +3,7 @@ import { capitalize, CardHeader, Grid, Card, CardContent, TextField, CardActions
 import { EntryStatus } from '../../interfaces/entries';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useMemo } from 'react';
 
 export const EntryPage = () => {
 
@@ -13,6 +13,8 @@ export const EntryPage = () => {
     const [status, setStatus] = useState('pending');
 
     const [hasTouched, setHasTouched] = useState(false);
+
+    const isValid = useMemo(() => !(inputText.length <= 0 && hasTouched), [inputText, hasTouched]);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputText(event.target.value)
@@ -24,7 +26,6 @@ export const EntryPage = () => {
 
     const onSave = () => {
         console.log({ inputText, status });
-
     }
 
 
@@ -51,6 +52,9 @@ export const EntryPage = () => {
                                     multiline
                                     label="Nueva entrada"
                                     onChange={onInputChange}
+                                    helperText={!isValid && 'Ingresa un valor'}
+                                    onBlur={() => setHasTouched(true)}
+                                    error={!isValid}
                                 />
 
                                 {/* RADIO */}
@@ -79,6 +83,7 @@ export const EntryPage = () => {
                                     variant="contained"
                                     fullWidth
                                     onClick={onSave}
+                                    disabled={inputText.length <= 0}
                                 >
                                     Guardar
                                 </Button>
