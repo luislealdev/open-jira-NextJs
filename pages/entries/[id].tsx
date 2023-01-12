@@ -8,6 +8,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { dbEntries } from '../../database';
 import { EntriesContext } from '../../context/entries/EntriesContext';
 import { useRouter } from 'next/router';
+import { fromThenToNow } from '../../utils/dateFunctions';
 
 interface Props {
     entry: Entry
@@ -67,7 +68,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
                         <Card>
                             <CardHeader
                                 title={`Entrada: ${inputText}`}
-                                subheader={`Creada hace ... minutos`}
+                                subheader={`Creada hace ${fromThenToNow(entry.createdAt)}`}
                             />
                             <CardContent>
                                 <TextField

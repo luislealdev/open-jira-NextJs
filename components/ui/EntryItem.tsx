@@ -4,6 +4,7 @@ import { Entry } from '../../interfaces/entries';
 import { useContext } from 'react';
 import { UIContext } from '../../context/ui/UIContext';
 import { useRouter } from 'next/router';
+import { fromThenToNow } from '../../utils/dateFunctions';
 
 interface Props {
     entry: Entry
@@ -35,7 +36,7 @@ export const EntryItem: FC<Props> = ({ entry }) => {
                 </CardContent>
 
                 <CardActions sx={{ display: 'flex', justifyContent: 'end', paddingRight: 2 }}>
-                    <Typography variant='body2'>hace 30 minutos</Typography>
+                    <Typography variant='body2'>{`hace ${fromThenToNow(entry.createdAt)}`}</Typography>
                 </CardActions>
             </CardActionArea>
         </Card>
